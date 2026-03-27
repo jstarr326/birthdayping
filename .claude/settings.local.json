@@ -4,7 +4,24 @@
       "Bash(python3 -c \"import Contacts; print\\(''Contacts OK''\\)\")",
       "Bash(python3 -c \"import sqlite3; print\\(''sqlite3 OK''\\)\")",
       "Bash(pip3 install:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(npm --version)",
+      "Bash(npx create-next-app@latest webapp --typescript --tailwind --eslint --app --src-dir --no-import-alias --yes)",
+      "Bash(sudo chown:*)",
+      "Bash(mkdir -p webapp)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npx:*)",
+      "Bash(ls -la /Users/jordantaylor/Desktop/claude-projects/birthdayping/.env*)",
+      "Bash(openssl rand:*)",
+      "Bash(POSTGRES_URL=postgres://localhost/dev NEXTAUTH_SECRET=x GOOGLE_CLIENT_ID=x GOOGLE_CLIENT_SECRET=x npx --cache /tmp/npm-cache next build)",
+      "Bash(npm uninstall:*)",
+      "Bash(node:*)",
+      "Bash(ls /Users/jordantaylor/Desktop/claude-projects/birthdayping/*.csv)",
+      "Read(//Users/jordantaylor/Desktop/**)",
+      "Read(//Users/jordantaylor/Downloads/**)",
+      "Bash(curl -s http://localhost:3000/api/reminders/today -H \"Authorization: Bearer dev-sync-key-change-me\" -H \"X-User-Email: jstarrtaylor@gmail.com\")",
+      "Bash(chmod:*)"
     ]
   }
 }

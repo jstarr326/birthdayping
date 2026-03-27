@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.birthdayping.reminder</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/jordantaylor/Desktop/claude-projects/birthdayping/mac-utility/reminder_check.py</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>BIRTHDAYPING_URL</key>
+        <string>http://localhost:3000</string>
+        <key>BIRTHDAYPING_KEY</key>
+        <string>dev-sync-key-change-me</string>
+        <key>BIRTHDAYPING_EMAIL</key>
+        <string>jstarrtaylor@gmail.com</string>
+        <key>BIRTHDAYPING_PHONE</key>
+        <string>+1XXXXXXXXXX</string>
+    </dict>
+
+    <!-- Run daily at 9:00 AM -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- Also run on load (catches up if Mac was asleep at 9 AM) -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/birthdayping-reminder.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/birthdayping-reminder.err</string>
+</dict>
+</plist>

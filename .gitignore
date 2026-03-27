@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.env.local
+local.db
+local.db-wal
+local.db-shm
+facebook-birthdays.csv
+contacts_ranked.json
