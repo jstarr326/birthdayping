@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import Contacts; print\\(''Contacts OK''\\)\")",
+      "Bash(python3 -c \"import sqlite3; print\\(''sqlite3 OK''\\)\")",
+      "Bash(pip3 install:*)",
+      "Bash(python3:*)"
+    ]
+  }
+}
