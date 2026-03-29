@@ -21,7 +21,9 @@
       "Read(//Users/jordantaylor/Desktop/**)",
       "Read(//Users/jordantaylor/Downloads/**)",
       "Bash(curl -s http://localhost:3000/api/reminders/today -H \"Authorization: Bearer dev-sync-key-change-me\" -H \"X-User-Email: jstarrtaylor@gmail.com\")",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(git:*)",
+      "Bash(vercel --version)"
     ]
   }
 }

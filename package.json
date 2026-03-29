@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "db:init": "node scripts/init-db.mjs",
+    "db:init:pg": "node scripts/init-db-postgres.mjs",
     "db:seed": "node scripts/seed.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
     "better-sqlite3": "^12.8.0",
     "next": "^15.2.4",
     "next-auth": "^4.24.11",

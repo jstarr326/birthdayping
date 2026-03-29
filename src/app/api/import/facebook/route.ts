@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const contacts = getContacts(session.user.id);
+  const contacts = await getContacts(session.user.id);
   const matches = matchBirthdays(birthdays, contacts);
 
   // Auto-apply exact matches immediately
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     // Only update if contact doesn't already have a birthday
     if (!contact.birthday_date) {
       const dateStr = `????-${String(birthday.month).padStart(2, "0")}-${String(birthday.day).padStart(2, "0")}`;
-      updateContactBirthday(session.user.id, contact.id, dateStr);
+      await updateContactBirthday(session.user.id, contact.id, dateStr);
       applied++;
     }
   }
@@ -99,7 +99,7 @@ export async function PUT(req: NextRequest) {
   let confirmed = 0;
   for (const { contactId, month, day } of body.confirmations) {
     const dateStr = `????-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    const changes = updateContactBirthday(session.user.id, contactId, dateStr);
+    const changes = await updateContactBirthday(session.user.id, contactId, dateStr);
     if (changes) confirmed++;
   }
 

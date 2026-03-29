@@ -1,33 +1,32 @@
 /**
- * Initialize the SQLite database schema.
- * Run: node scripts/init-db.mjs
+ * Initialize the Postgres database schema on Vercel/Neon.
+ * Run: DATABASE_URL=postgres://... node scripts/init-db-postgres.mjs
  */
 
-import Database from "better-sqlite3";
-import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
+import { neon } from "@neondatabase/serverless";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const dbPath = process.env.DATABASE_PATH ?? resolve(__dirname, "../local.db");
-const db = new Database(dbPath);
+const DATABASE_URL = process.env.DATABASE_URL;
+if (!DATABASE_URL) {
+  console.error("Set DATABASE_URL to your Neon/Postgres connection string");
+  process.exit(1);
+}
 
-db.pragma("journal_mode = WAL");
-db.pragma("foreign_keys = ON");
+const sql = neon(DATABASE_URL);
 
-console.log(`Initializing database at ${dbPath}...`);
+console.log("Initializing Postgres schema...");
 
-db.exec(`
+await sql`
   CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
     name TEXT,
     email TEXT UNIQUE NOT NULL,
-    email_verified TEXT,
+    email_verified TIMESTAMPTZ,
     image TEXT,
-    created_at TEXT DEFAULT (datetime('now'))
+    created_at TIMESTAMPTZ DEFAULT NOW()
   )
-`);
+`;
 
-db.exec(`
+await sql`
   CREATE TABLE IF NOT EXISTS accounts (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -36,63 +35,62 @@ db.exec(`
     provider_account_id TEXT NOT NULL,
     refresh_token TEXT,
     access_token TEXT,
-    expires_at INTEGER,
+    expires_at INT,
     token_type TEXT,
     scope TEXT,
     id_token TEXT,
     session_state TEXT,
     UNIQUE(provider, provider_account_id)
   )
-`);
+`;
 
-db.exec(`
+await sql`
   CREATE TABLE IF NOT EXISTS sessions (
     id TEXT PRIMARY KEY,
     session_token TEXT UNIQUE NOT NULL,
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    expires TEXT NOT NULL
+    expires TIMESTAMPTZ NOT NULL
   )
-`);
+`;
 
-db.exec(`
+await sql`
   CREATE TABLE IF NOT EXISTS verification_tokens (
     identifier TEXT NOT NULL,
     token TEXT NOT NULL,
-    expires TEXT NOT NULL,
+    expires TIMESTAMPTZ NOT NULL,
     PRIMARY KEY (identifier, token)
   )
-`);
+`;
 
-db.exec(`
+await sql`
   CREATE TABLE IF NOT EXISTS contacts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
     identifier TEXT NOT NULL,
-    score REAL DEFAULT 0,
-    total_messages INTEGER DEFAULT 0,
-    sent_count INTEGER DEFAULT 0,
-    received_count INTEGER DEFAULT 0,
-    last_texted TEXT,
-    has_birthday INTEGER DEFAULT 0,
+    score FLOAT DEFAULT 0,
+    total_messages INT DEFAULT 0,
+    sent_count INT DEFAULT 0,
+    received_count INT DEFAULT 0,
+    last_texted DATE,
+    has_birthday BOOLEAN DEFAULT false,
     birthday_date TEXT,
-    enabled INTEGER DEFAULT 1,
-    created_at TEXT DEFAULT (datetime('now')),
-    updated_at TEXT DEFAULT (datetime('now')),
+    enabled BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE(user_id, identifier)
   )
-`);
+`;
 
-db.exec(`
+await sql`
   CREATE TABLE IF NOT EXISTS settings (
     user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
     send_time TEXT DEFAULT '09:00',
-    threshold REAL DEFAULT 0.3,
+    threshold FLOAT DEFAULT 0.3,
     default_message TEXT DEFAULT 'Happy birthday!',
     phone_number TEXT,
-    updated_at TEXT DEFAULT (datetime('now'))
+    updated_at TIMESTAMPTZ DEFAULT NOW()
   )
-`);
+`;
 
-db.close();
-console.log("✓ Schema ready");
+console.log("✓ Postgres schema ready");

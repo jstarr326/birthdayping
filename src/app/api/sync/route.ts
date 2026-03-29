@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db, upsertContact } from "@/lib/db";
+import { getUserIdByEmail, upsertContact } from "@/lib/db";
 
 // The Mac utility posts to this endpoint with contacts_ranked.json data.
 // Auth: Bearer token (SYNC_API_KEY env var) + user lookup by email.
@@ -15,11 +15,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing x-user-email header" }, { status: 400 });
   }
 
-  const user = db.prepare(`SELECT id FROM users WHERE email = ?`).get(userEmail) as { id: string } | undefined;
-  if (!user) {
+  const userId = await getUserIdByEmail(userEmail);
+  if (!userId) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
-  const userId = user.id;
 
   let body: { has_birthday?: unknown[]; missing_birthday?: unknown[] };
   try {
@@ -47,7 +46,7 @@ export async function POST(req: NextRequest) {
       birthday_date: string | null;
     };
     if (!contact.name || !contact.identifier) continue;
-    upsertContact(userId, {
+    await upsertContact(userId, {
       name: contact.name,
       identifier: contact.identifier,
       score: contact.score ?? 0,

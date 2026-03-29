@@ -7,6 +7,7 @@ type Settings = {
   send_time: string;
   threshold: number;
   default_message: string;
+  phone_number: string;
 };
 
 export default function SettingsPage() {
@@ -14,6 +15,7 @@ export default function SettingsPage() {
     send_time: "09:00",
     threshold: 0.3,
     default_message: "Happy birthday!",
+    phone_number: "",
   });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -122,13 +124,30 @@ export default function SettingsPage() {
             </p>
           </div>
 
+          {/* Phone number */}
+          <div className="p-5 flex items-center justify-between gap-4">
+            <div>
+              <p className="font-medium text-gray-900 text-sm">Your phone number</p>
+              <p className="text-xs text-gray-400 mt-0.5">
+                Reminders are sent here via iMessage
+              </p>
+            </div>
+            <input
+              type="tel"
+              value={settings.phone_number}
+              onChange={(e) => setSettings({ ...settings, phone_number: e.target.value })}
+              placeholder="+15551234567"
+              className="border border-gray-300 rounded px-3 py-1.5 text-sm w-44 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
           {/* Test reminder */}
           <div className="p-5">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-gray-900 text-sm">Test reminder</p>
+                <p className="font-medium text-gray-900 text-sm">Send test reminder now</p>
                 <p className="text-xs text-gray-400 mt-0.5">
-                  Preview what the reminder text will look like
+                  Sends a real iMessage to your phone number above
                 </p>
               </div>
               <button
@@ -138,23 +157,34 @@ export default function SettingsPage() {
                   try {
                     const res = await fetch("/api/reminders/test", { method: "POST" });
                     const data = await res.json();
-                    setTestResult(data.message);
+                    if (data.error) {
+                      setTestResult(`Error: ${data.error}`);
+                    } else {
+                      setTestResult(`Sent to ${data.phone}: "${data.message}"`);
+                    }
                   } catch {
-                    setTestResult("Failed to generate test reminder");
+                    setTestResult("Error: could not reach server");
                   } finally {
                     setTesting(false);
                   }
                 }}
-                disabled={testing}
+                disabled={testing || !settings.phone_number}
                 className="text-sm text-blue-600 font-medium hover:text-blue-800 disabled:opacity-50"
               >
-                {testing ? "Loading…" : "Send test"}
+                {testing ? "Sending…" : "Send test"}
               </button>
             </div>
             {testResult && (
-              <div className="mt-3 bg-green-50 border border-green-200 rounded-lg p-3">
-                <p className="text-xs text-green-600 font-medium mb-1">Preview:</p>
-                <p className="text-sm text-green-800">{testResult}</p>
+              <div className={`mt-3 rounded-lg p-3 ${
+                testResult.startsWith("Error")
+                  ? "bg-red-50 border border-red-200"
+                  : "bg-green-50 border border-green-200"
+              }`}>
+                <p className={`text-sm ${
+                  testResult.startsWith("Error") ? "text-red-700" : "text-green-800"
+                }`}>
+                  {testResult}
+                </p>
               </div>
             )}
           </div>

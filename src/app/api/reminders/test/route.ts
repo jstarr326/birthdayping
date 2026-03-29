@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { db } from "@/lib/db";
+import { getTestReminderInfo } from "@/lib/db";
+import { execSync } from "child_process";
 
 // POST /api/reminders/test
-// Returns a test reminder payload so the settings page can trigger a test iMessage.
-// Uses the first enabled contact with a birthday, or a placeholder name.
+// Sends a real test iMessage to the user's phone number via osascript.
+// Only works when the Next.js server is running locally on a Mac.
 
 export async function POST() {
   const session = await getServerSession(authOptions);
@@ -13,23 +14,31 @@ export async function POST() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const settings = db
-    .prepare("SELECT default_message FROM settings WHERE user_id = ?")
-    .get(session.user.id) as { default_message: string } | undefined;
+  const info = await getTestReminderInfo(session.user.id);
+  if (!info) {
+    return NextResponse.json(
+      { error: "Set your phone number above first" },
+      { status: 400 }
+    );
+  }
 
-  const template = settings?.default_message ?? "Reminder: today is {name}'s birthday!";
+  const { phone, message } = info;
 
-  // Pick a real contact name for the test
-  const sample = db
-    .prepare(
-      `SELECT name FROM contacts
-       WHERE user_id = ? AND enabled = 1 AND has_birthday = 1
-       ORDER BY score DESC LIMIT 1`
-    )
-    .get(session.user.id) as { name: string } | undefined;
+  // Send via osascript (local Mac only)
+  const escaped = message.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  const script = `tell application "Messages" to send "${escaped}" to buddy "${phone}"`;
 
-  const name = sample?.name ?? "Jane Doe";
-  const message = template.replace(/\{name\}/g, name);
-
-  return NextResponse.json({ message, name });
+  try {
+    execSync(`osascript -e '${script.replace(/'/g, "'\\''")}'`, {
+      timeout: 15000,
+    });
+    return NextResponse.json({ sent: true, message, phone });
+  } catch (e) {
+    const err = e as { stderr?: Buffer };
+    const stderr = err.stderr?.toString().trim() ?? "Unknown error";
+    return NextResponse.json(
+      { error: `osascript failed: ${stderr}` },
+      { status: 500 }
+    );
+  }
 }
