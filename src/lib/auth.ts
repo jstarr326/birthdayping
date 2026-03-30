@@ -10,8 +10,14 @@ let adapter: any;
 
 if (isPostgres) {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { PgAuthAdapter } = require("./db-postgres");
-  adapter = PgAuthAdapter;
+  const pgModule = require("./db-postgres");
+  console.log("[auth] db-postgres module keys:", Object.keys(pgModule));
+  adapter = pgModule.PgAuthAdapter;
+  if (!adapter) {
+    console.error("[auth] PgAuthAdapter is undefined! Module:", pgModule);
+    throw new Error("PgAuthAdapter not found in db-postgres module");
+  }
+  console.log("[auth] PgAuthAdapter methods:", Object.keys(adapter));
 } else {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { sqliteDb } = require("./db-sqlite");

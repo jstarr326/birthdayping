@@ -183,13 +183,16 @@ function toUser(row: Record<string, unknown> | undefined | null) {
 export const PgAuthAdapter = {
   async createUser(user: { email: string; name?: string | null; image?: string | null; emailVerified: Date | null }) {
     const id = crypto.randomUUID();
+    console.log("[PgAuthAdapter.createUser] creating:", { id, email: user.email });
     await execute(
       `INSERT INTO users (id, name, email, email_verified, image)
        VALUES ($1, $2, $3, $4, $5)
        ON CONFLICT (email) DO NOTHING`,
       [id, user.name ?? null, user.email, user.emailVerified?.toISOString() ?? null, user.image ?? null]
     );
-    return toUser(await queryOne("SELECT * FROM users WHERE email = $1", [user.email]));
+    const result = toUser(await queryOne("SELECT * FROM users WHERE email = $1", [user.email]));
+    console.log("[PgAuthAdapter.createUser] returning:", result);
+    return result;
   },
   async getUser(id: string) {
     return toUser(await queryOne("SELECT * FROM users WHERE id = $1", [id]));
@@ -214,6 +217,7 @@ export const PgAuthAdapter = {
     token_type?: string | null; scope?: string | null; id_token?: string | null; session_state?: string | null;
   }) {
     const id = crypto.randomUUID();
+    console.log("[PgAuthAdapter.linkAccount] linking:", { userId: account.userId, provider: account.provider });
     await execute(
       `INSERT INTO accounts (id, user_id, type, provider, provider_account_id,
         refresh_token, access_token, expires_at, token_type, scope, id_token, session_state)
@@ -225,21 +229,36 @@ export const PgAuthAdapter = {
         account.token_type ?? null, account.scope ?? null, account.id_token ?? null, account.session_state ?? null,
       ]
     );
+    console.log("[PgAuthAdapter.linkAccount] done");
   },
   async createSession(session: { sessionToken: string; userId: string; expires: Date }) {
-    const id = crypto.randomUUID();
-    const expiresStr = session.expires instanceof Date
-      ? session.expires.toISOString()
-      : String(session.expires);
-    const row = await queryOne<{ session_token: string; user_id: string; expires: string }>(
-      "INSERT INTO sessions (id, session_token, user_id, expires) VALUES ($1, $2, $3, $4) RETURNING session_token, user_id, expires",
-      [id, session.sessionToken, session.userId, expiresStr]
-    );
-    return {
-      sessionToken: row!.session_token,
-      userId: row!.user_id,
-      expires: new Date(row!.expires),
-    };
+    try {
+      const id = crypto.randomUUID();
+      const expiresStr = session.expires instanceof Date
+        ? session.expires.toISOString()
+        : String(session.expires);
+      console.log("[PgAuthAdapter.createSession] input:", { sessionToken: session.sessionToken, userId: session.userId, expires: expiresStr });
+      const { rows } = await pool.query(
+        "INSERT INTO sessions (id, session_token, user_id, expires) VALUES ($1, $2, $3, $4) RETURNING session_token, user_id, expires",
+        [id, session.sessionToken, session.userId, expiresStr]
+      );
+      const row = rows[0];
+      console.log("[PgAuthAdapter.createSession] RETURNING row:", row);
+      if (!row) {
+        console.error("[PgAuthAdapter.createSession] INSERT RETURNING returned no rows!");
+        return { sessionToken: session.sessionToken, userId: session.userId, expires: session.expires };
+      }
+      const result = {
+        sessionToken: row.session_token,
+        userId: row.user_id,
+        expires: new Date(row.expires),
+      };
+      console.log("[PgAuthAdapter.createSession] returning:", result);
+      return result;
+    } catch (err) {
+      console.error("[PgAuthAdapter.createSession] ERROR:", err);
+      throw err;
+    }
   },
   async getSessionAndUser(sessionToken: string) {
     const row = await queryOne<Record<string, unknown>>(
