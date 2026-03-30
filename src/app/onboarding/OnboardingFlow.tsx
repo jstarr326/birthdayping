@@ -19,6 +19,7 @@ export default function OnboardingFlow({
   const [contactCount, setContactCount] = useState(initialContactCount);
   const [checking, setChecking] = useState(false);
   const [threshold, setThreshold] = useState(0.3);
+  const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
 
   const checkSync = useCallback(async () => {
@@ -223,14 +224,13 @@ python3 scripts/sync.py`}</pre>
               </p>
 
               <div className="space-y-2 mb-6">
-                {presets.map((p) => {
+                {presets.map((p, i) => {
                   const count = countAbove(p.value);
-                  const selected =
-                    Math.abs(threshold - p.value) < 0.01;
+                  const selected = selectedPreset === i;
                   return (
                     <button
                       key={p.label}
-                      onClick={() => setThreshold(p.value)}
+                      onClick={() => { setThreshold(p.value); setSelectedPreset(i); }}
                       className={`w-full text-left p-4 rounded-xl border transition-colors ${
                         selected
                           ? "border-blue-500 bg-blue-50"
@@ -276,9 +276,10 @@ python3 scripts/sync.py`}</pre>
                     max="1"
                     step="0.01"
                     value={threshold}
-                    onChange={(e) =>
-                      setThreshold(parseFloat(e.target.value))
-                    }
+                    onChange={(e) => {
+                      setThreshold(parseFloat(e.target.value));
+                      setSelectedPreset(null);
+                    }}
                     className="w-full accent-blue-500"
                   />
                 </div>
@@ -318,20 +319,29 @@ python3 scripts/sync.py`}</pre>
                 <p className="text-sm text-gray-700 font-medium mb-2">
                   How to export from Facebook
                 </p>
-                <ol className="text-sm text-gray-500 space-y-1 list-decimal list-inside">
+                <ol className="text-sm text-gray-500 space-y-1.5 list-decimal list-inside">
                   <li>
-                    Install the{" "}
-                    <span className="font-medium text-gray-700">
+                    Install{" "}
+                    <a
+                      href="https://chromewebstore.google.com/detail/birthday-calendar-exporte/imielmggcccenhgncmpjlehemlinhjjo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline font-medium"
+                    >
                       Birthday Calendar Exporter
-                    </span>{" "}
-                    Chrome extension
+                    </a>{" "}
+                    from the Chrome Web Store
                   </li>
                   <li>
-                    Go to Facebook and let it scan (~10 min)
+                    Open Facebook, click the extension icon, and let it scan (~2 min)
                   </li>
                   <li>Download the .csv export</li>
                   <li>Upload it below</li>
                 </ol>
+                <p className="text-xs text-gray-400 mt-3">
+                  Or if you have the BirthdayPing Mac utility, run the built-in
+                  Facebook scraper from the menu bar — no extension needed.
+                </p>
               </div>
 
               <div className="mb-6">
