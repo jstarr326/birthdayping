@@ -7,3 +7,10 @@ local.db-shm
 facebook-birthdays.csv
 contacts_ranked.json
 .vercel
+
+# Mac utility build artifacts
+mac-utility/build/
+mac-utility/dist/
+mac-utility/logs/
+mac-utility/__pycache__/
+*.pyc
