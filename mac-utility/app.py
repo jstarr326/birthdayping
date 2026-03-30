@@ -221,9 +221,11 @@ class BirthdayPingApp(rumps.App):
                 "Facebook Scraper",
                 "Opening browser — log into Facebook when prompted.",
             )
+            csv_path = Path.home() / ".birthdayping" / "facebook-birthdays.csv"
             result = subprocess.run(
-                [sys.executable, str(FB_SCRAPER)] if getattr(sys, "frozen", False)
-                else ["/usr/bin/python3", str(FB_SCRAPER)],
+                [sys.executable, str(FB_SCRAPER), "--output", str(csv_path)]
+                if getattr(sys, "frozen", False)
+                else ["/usr/bin/python3", str(FB_SCRAPER), "--output", str(csv_path)],
                 capture_output=True,
                 text=True,
                 timeout=600,  # 10 min — user needs time to log in
@@ -235,10 +237,19 @@ class BirthdayPingApp(rumps.App):
                 )
                 return
 
-            # Pull summary from last line of stdout
-            output_lines = result.stdout.strip().split("\n")
-            summary = output_lines[-1] if output_lines else "Done"
-            rumps.notification("BirthdayPing", "Facebook Scraper", summary)
+            # Count birthdays from output
+            import re as _re
+            count_match = _re.search(r"Saved (\d+) birthdays", result.stdout)
+            count = count_match.group(1) if count_match else "?"
+
+            rumps.notification(
+                "BirthdayPing",
+                "Facebook Scraper",
+                f"Found {count} birthdays! Opening dashboard to import...",
+            )
+
+            # Auto-open the dashboard with import flag
+            webbrowser.open(f"{DASHBOARD_URL}?import=facebook")
 
         except subprocess.TimeoutExpired:
             rumps.notification("BirthdayPing", "Scrape timed out", "Try again.")

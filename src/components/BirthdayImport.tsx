@@ -22,20 +22,27 @@ type ImportResult = {
   applied: number;
 };
 
-type Step = "idle" | "uploading" | "results" | "reviewing";
+type Step = "idle" | "prompting" | "uploading" | "results" | "reviewing";
 
 function formatDate(month: number, day: number): string {
   const date = new Date(2000, month - 1, day);
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
-export default function BirthdayImport({ onComplete }: { onComplete: () => void }) {
-  const [step, setStep] = useState<Step>("idle");
+export default function BirthdayImport({
+  onComplete,
+  autoPrompt = false,
+}: {
+  onComplete: () => void;
+  autoPrompt?: boolean;
+}) {
+  const [step, setStep] = useState<Step>(autoPrompt ? "prompting" : "idle");
   const [result, setResult] = useState<ImportResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [accepted, setAccepted] = useState<Set<number>>(new Set());
   const [confirming, setConfirming] = useState(false);
   const [confirmed, setConfirmed] = useState<number | null>(null);
+  const [dragging, setDragging] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (file: File) => {
@@ -68,6 +75,13 @@ export default function BirthdayImport({ onComplete }: { onComplete: () => void 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    if (file) handleUpload(file);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragging(false);
+    const file = e.dataTransfer.files?.[0];
     if (file) handleUpload(file);
   };
 
@@ -116,6 +130,52 @@ export default function BirthdayImport({ onComplete }: { onComplete: () => void 
     setConfirmed(null);
     onComplete();
   };
+
+  // ── Prompting: shown after Facebook scraper completes ──
+  if (step === "prompting") {
+    return (
+      <div className="col-span-full">
+        <input
+          ref={fileRef}
+          type="file"
+          accept=".ics,.ical,.csv"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={handleDrop}
+          className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
+            dragging
+              ? "border-blue-500 bg-blue-50"
+              : "border-blue-300 bg-blue-50/50"
+          }`}
+        >
+          <div className="text-3xl mb-3">🎉</div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            Facebook birthdays are ready to import!
+          </h3>
+          <p className="text-sm text-gray-500 mb-4">
+            Drop the <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">facebook-birthdays.csv</code> file
+            here, or click to browse.
+          </p>
+          <button
+            onClick={() => fileRef.current?.click()}
+            className="bg-blue-600 text-white text-sm font-medium px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Choose CSV file
+          </button>
+          <p className="text-xs text-gray-400 mt-3">
+            Default location: ~/.birthdayping/facebook-birthdays.csv
+          </p>
+        </div>
+        {error && (
+          <p className="text-sm text-red-600 mt-2">{error}</p>
+        )}
+      </div>
+    );
+  }
 
   // ── Idle: show upload button ──
   if (step === "idle") {
@@ -218,7 +278,7 @@ export default function BirthdayImport({ onComplete }: { onComplete: () => void 
 
   // ── Results summary ──
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
+    <div className={`bg-white rounded-xl border border-gray-200 p-6 ${autoPrompt ? "col-span-full" : ""}`}>
       <h3 className="font-semibold text-gray-900 mb-3">Import results</h3>
 
       <div className="grid grid-cols-3 gap-4 mb-4">
