@@ -139,13 +139,23 @@ export default function OnboardingFlow({
               {/* Download */}
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-5">
                 <p className="text-sm font-medium text-blue-800 mb-2">
-                  1. Download and run the Mac utility
+                  1. Download BirthdayPing for Mac
                 </p>
-                <pre className="bg-white rounded-lg p-3 text-xs text-gray-700 overflow-x-auto">
-{`git clone https://github.com/jstarr326/birthdayping.git
-cd birthdayping
-python3 core_engine.py
-python3 scripts/sync.py`}</pre>
+                <a
+                  href="https://github.com/jstarr326/birthdayping/releases"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                  </svg>
+                  Download for Mac
+                </a>
+                <p className="text-xs text-gray-500 mt-2">
+                  Open the DMG, drag BirthdayPing to Applications, then
+                  right-click the app → Open → click Open.
+                </p>
               </div>
 
               {/* Permissions checklist */}
