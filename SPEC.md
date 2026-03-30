@@ -332,7 +332,54 @@ Mac App Store apps are sandboxed — they cannot request or use Full Disk Access
 
 ---
 
-## Future Roadmap (v1+)
+## Remaining Phases
+
+### Phase 6: Manual Birthday Entry + Dashboard Polish
+- [ ] Verify inline "+ Add birthday" date picker works on production
+- [ ] Allow users to manually add contacts not in the auto-detected list
+- [ ] Show birthday coverage stats: "You have birthdays for X of Y contacts"
+- [ ] Improve contact cards with clearer score explanations
+
+### Phase 7: Onboarding Flow
+- [ ] Guided first-time experience (replaces empty state)
+- [ ] Step 1: Welcome + privacy messaging ("reads who you text, never what you say")
+- [ ] Step 2: Download Mac utility + permission checklist (Full Disk Access, Contacts, Automation)
+- [ ] Step 3: Threshold selection ("Top 20 / Top 50 / Everyone in last year / Custom")
+- [ ] Step 4: Optional Facebook import with Chrome extension instructions
+- [ ] Step 5: Confirmation + upcoming birthdays preview
+- [ ] Store onboarding completion so returning users skip to dashboard
+
+### Phase 8: Twilio Integration
+- [ ] Replace osascript (Mac-only) with Twilio SMS for reminder delivery
+- [ ] User enters phone number in settings
+- [ ] Server sends reminder texts via Twilio on birthday mornings
+- [ ] No Mac utility needed for reminders — works for any user, any platform
+- [ ] This is the unlock for multi-user: other people can sign up and get reminders without running the Mac utility 24/7
+
+### Phase 9: Mac Utility Packaging + Distribution
+- [ ] PyInstaller packaging as .app
+- [ ] Apple Developer ID code signing
+- [ ] Apple notarization
+- [ ] Download page on birthdayping.vercel.app with install instructions
+- [ ] Auto-update mechanism (or manual "check for updates")
+
+### Phase 10: Landing Page + GTM
+- [ ] Landing page explaining the product with privacy-first messaging
+- [ ] "Download for Mac" CTA
+- [ ] Demo video or screenshots showing the ranked contact list
+- [ ] SEO basics, social sharing meta tags
+
+### Phase 11: Built-in Facebook Scraper
+- [ ] Replace Chrome extension dependency with native scraping in the Mac utility
+- [ ] Mac utility opens a browser window (Playwright/Selenium) to facebook.com/events/birthdays
+- [ ] User logs into Facebook in the browser (they control it, not the app)
+- [ ] Script scrapes birthday page automatically
+- [ ] Results sync to dashboard — no file export/upload needed
+- [ ] Handles Facebook layout changes gracefully with error reporting
+
+---
+
+## Long-Term Roadmap (v2+)
 
 ### LLM-Assisted Name Matching
 - Claude API for ambiguous Facebook-to-Contact matches
@@ -346,7 +393,7 @@ Mac App Store apps are sandboxed — they cannot request or use Full Disk Access
 
 ### Mobile App
 - iOS app that shows upcoming birthdays and lets you manage toggles
-- Push notifications as an alternative to Mac utility for reminders
+- Push notifications as an alternative to SMS for reminders
 - Long-term: could replace the Mac utility if Apple ever opens up iMessage APIs
 
 ### Relationship Memory / Personal CRM
@@ -362,15 +409,17 @@ The core asset is the communication-pattern analysis engine. Birthdays are the f
 
 ## Resolved Decisions
 
-- **Hosting:** Vercel (already have an account) with Vercel Postgres
+- **Hosting:** Vercel with Supabase Postgres
 - **Auth:** Google OAuth via NextAuth.js
 - **Communication model:** Polling (Mac utility checks server 1-2x daily)
 - **Reminder model:** App texts the USER a reminder ("Here's a reminder to say happy birthday to [Name]"). User sends the actual birthday message themselves — preserves personal touch.
-- **Facebook:** Core flow, not optional. Import via Chrome extension export (.ics/.csv).
+- **Facebook:** Core flow, not optional. Currently via Chrome extension export (.ics/.csv). Native scraper planned for Phase 11.
+- **No birthday-collection links:** Removed — if recipients fill in their birthday via a link and get an automated text on that day, they'll connect the dots and it kills the personal touch (Megan's feedback).
 
 ## Open Questions
 
 - **Project name:** BirthdayPing is the working title. Open to alternatives.
 - **Facebook name matching threshold:** How aggressively to auto-match close-but-not-exact names vs surfacing for user review? Will be trial and error.
 - **Reminder timing:** What time of day should the reminder text arrive? Default 9 AM, but should it be configurable?
-- **Future: auto-send option?** Should there eventually be an opt-in to auto-send birthday texts directly to contacts, or always keep it as a reminder to the user?
+- **Twilio vs other SMS providers:** Twilio is the default choice but worth evaluating cost for scale.
+- **Pricing model:** Free? One-time purchase? Subscription? TBD after validating with real users.

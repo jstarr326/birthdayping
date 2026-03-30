@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
-import { getContacts } from "@/lib/db";
+import { getContacts, isOnboardingComplete } from "@/lib/db";
 import ContactList from "@/components/ContactList";
 import UpcomingBirthdays from "@/components/UpcomingBirthdays";
 import ImportButton from "@/components/ImportButton";
@@ -12,6 +12,9 @@ export default async function DashboardPage() {
   if (!session?.user?.id) {
     redirect("/api/auth/signin");
   }
+
+  const onboarded = await isOnboardingComplete(session.user.id);
+  if (!onboarded) redirect("/onboarding");
 
   const contacts = await getContacts(session.user.id);
 
@@ -51,24 +54,8 @@ export default async function DashboardPage() {
           <ImportButton />
         </div>
 
-        {contacts.length === 0 ? (
-          <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
-            <p className="text-gray-500 text-sm mb-2">No contacts synced yet.</p>
-            <p className="text-gray-400 text-xs">
-              Run the Mac utility to sync your iMessage contacts.
-            </p>
-            <pre className="mt-4 bg-gray-50 rounded p-3 text-xs text-gray-600 text-left inline-block">
-              {`python3 core_engine.py
-# then sync:
-python3 sync.py --email ${session.user.email}`}
-            </pre>
-          </div>
-        ) : (
-          <>
-            <UpcomingBirthdays contacts={contacts} />
-            <ContactList contacts={contacts} />
-          </>
-        )}
+        <UpcomingBirthdays contacts={contacts} />
+        <ContactList contacts={contacts} />
       </main>
     </div>
   );

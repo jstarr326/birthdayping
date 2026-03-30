@@ -157,3 +157,17 @@ export function getTestReminderInfo(userId: string): TestReminderInfo | null {
     name: testName,
   };
 }
+
+export function isOnboardingComplete(userId: string): boolean {
+  const row = sqliteDb.prepare("SELECT onboarding_complete FROM settings WHERE user_id = ?")
+    .get(userId) as { onboarding_complete: number } | undefined;
+  return !!row?.onboarding_complete;
+}
+
+export function completeOnboarding(userId: string): void {
+  sqliteDb.prepare(`
+    INSERT INTO settings (user_id, onboarding_complete)
+    VALUES (?, 1)
+    ON CONFLICT (user_id) DO UPDATE SET onboarding_complete = 1, updated_at = datetime('now')
+  `).run(userId);
+}

@@ -21,6 +21,7 @@ export type Settings = {
   threshold: number;
   default_message: string;
   phone_number: string | null;
+  onboarding_complete: boolean;
 };
 
 export type Reminder = {

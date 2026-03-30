@@ -195,6 +195,23 @@ export async function getTestReminderInfo(userId: string): Promise<TestReminderI
   };
 }
 
+export async function isOnboardingComplete(userId: string): Promise<boolean> {
+  const row = await queryOne<{ onboarding_complete: boolean }>(
+    "SELECT onboarding_complete FROM settings WHERE user_id = $1",
+    [userId]
+  );
+  return !!row?.onboarding_complete;
+}
+
+export async function completeOnboarding(userId: string): Promise<void> {
+  await execute(
+    `INSERT INTO settings (user_id, onboarding_complete)
+     VALUES ($1, true)
+     ON CONFLICT (user_id) DO UPDATE SET onboarding_complete = true, updated_at = NOW()`,
+    [userId]
+  );
+}
+
 // ── Auth adapter ────────────────────────────────────────────────────
 
 function toUser(row: Record<string, unknown> | undefined | null) {

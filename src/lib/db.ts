@@ -24,6 +24,8 @@ interface DbBackend {
   getUserIdByEmail(email: string): string | null | Promise<string | null>;
   getTodayReminders(userId: string): Reminder[] | Promise<Reminder[]>;
   getTestReminderInfo(userId: string): TestReminderInfo | null | Promise<TestReminderInfo | null>;
+  isOnboardingComplete(userId: string): boolean | Promise<boolean>;
+  completeOnboarding(userId: string): void | Promise<void>;
 }
 
 const isPostgres = !!process.env.DATABASE_URL;
@@ -70,4 +72,12 @@ export function getTodayReminders(userId: string) {
 
 export function getTestReminderInfo(userId: string) {
   return backend.getTestReminderInfo(userId) as Promise<TestReminderInfo | null>;
+}
+
+export function isOnboardingComplete(userId: string) {
+  return backend.isOnboardingComplete(userId) as Promise<boolean>;
+}
+
+export function completeOnboarding(userId: string) {
+  return backend.completeOnboarding(userId) as Promise<void>;
 }
