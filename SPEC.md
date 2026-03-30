@@ -27,7 +27,7 @@ Your iMessage/SMS history is a near-perfect proxy for relationship importance. F
 
 ### First-Time Setup
 
-1. **Create an account** at bdayalert.app (email + password, or OAuth)
+1. **Create an account** at birthdayping.vercel.app (email + password, or OAuth)
 2. **Download & install** the Mac utility (direct download, not App Store)
 3. **Log into the Mac utility** with your account
 4. **Grant Full Disk Access** — guided walkthrough with explicit privacy promise: "We read who you text and when — never what you say."
@@ -54,7 +54,7 @@ The dashboard shows two groups:
 
 ### Ongoing
 
-- **Web dashboard** (bdayalert.app) is where you manage everything:
+- **Web dashboard** (birthdayping.vercel.app) is where you manage everything:
   - See upcoming birthdays
   - Toggle per-person reminders on/off
   - Customize birthday messages (per-person or global default)
@@ -322,7 +322,7 @@ Optional, in addition to automated texts:
 - [ ] PyInstaller packaging as distributable .app
 - [ ] Code-sign with Apple Developer ID certificate
 - [ ] Notarize with Apple
-- [ ] Landing page for bdayalert.app
+- [ ] Landing page for birthdayping.vercel.app
 
 ### Why Not the Mac App Store?
 
@@ -360,7 +360,7 @@ Mac App Store apps are sandboxed — they cannot request or use Full Disk Access
 - [ ] PyInstaller packaging as .app
 - [ ] Apple Developer ID code signing
 - [ ] Apple notarization
-- [ ] Download page on bdayalert.app with install instructions
+- [ ] Download page on birthdayping.vercel.app with install instructions
 - [ ] Auto-update mechanism (or manual "check for updates")
 
 ### Phase 10: Landing Page + GTM
