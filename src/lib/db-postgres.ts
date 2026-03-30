@@ -32,10 +32,31 @@ async function execute(text: string, params: unknown[] = []): Promise<number> {
 // ── App functions ───────────────────────────────────────────────────
 
 export async function getContacts(userId: string): Promise<Contact[]> {
-  return query<Contact>(
+  const rows = await query<Record<string, unknown>>(
     "SELECT * FROM contacts WHERE user_id = $1 ORDER BY score DESC",
     [userId]
   );
+  return rows.map(toContact);
+}
+
+// pg returns DATE/TIMESTAMPTZ as JS Date objects — coerce to strings for the UI
+function toContact(row: Record<string, unknown>): Contact {
+  return {
+    id: row.id as number,
+    user_id: row.user_id as string,
+    name: row.name as string,
+    identifier: row.identifier as string,
+    score: row.score as number,
+    total_messages: row.total_messages as number,
+    sent_count: row.sent_count as number,
+    received_count: row.received_count as number,
+    last_texted: row.last_texted instanceof Date ? row.last_texted.toISOString().slice(0, 10) : (row.last_texted as string | null),
+    has_birthday: row.has_birthday as boolean,
+    birthday_date: row.birthday_date as string | null,
+    enabled: row.enabled as boolean,
+    created_at: row.created_at instanceof Date ? row.created_at.toISOString() : (row.created_at as string),
+    updated_at: row.updated_at instanceof Date ? row.updated_at.toISOString() : (row.updated_at as string),
+  };
 }
 
 export async function upsertContact(

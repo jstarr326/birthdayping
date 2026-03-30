@@ -23,7 +23,8 @@
       "Bash(curl -s http://localhost:3000/api/reminders/today -H \"Authorization: Bearer dev-sync-key-change-me\" -H \"X-User-Email: jstarrtaylor@gmail.com\")",
       "Bash(chmod:*)",
       "Bash(git:*)",
-      "Bash(vercel --version)"
+      "Bash(vercel --version)",
+      "Bash(vercel env:*)"
     ]
   }
 }
