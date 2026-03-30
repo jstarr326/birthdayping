@@ -1,5 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { PgAuthAdapter } from "./db-postgres";
 
 const isPostgres = !!process.env.DATABASE_URL;
 
@@ -9,15 +10,7 @@ const isPostgres = !!process.env.DATABASE_URL;
 let adapter: any;
 
 if (isPostgres) {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const pgModule = require("./db-postgres");
-  console.log("[auth] db-postgres module keys:", Object.keys(pgModule));
-  adapter = pgModule.PgAuthAdapter;
-  if (!adapter) {
-    console.error("[auth] PgAuthAdapter is undefined! Module:", pgModule);
-    throw new Error("PgAuthAdapter not found in db-postgres module");
-  }
-  console.log("[auth] PgAuthAdapter methods:", Object.keys(adapter));
+  adapter = PgAuthAdapter;
 } else {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { sqliteDb } = require("./db-sqlite");

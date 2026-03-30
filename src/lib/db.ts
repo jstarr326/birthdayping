@@ -9,9 +9,10 @@ export type { Contact, Settings, Reminder, TestReminderInfo } from "./db-types";
 
 import type { Contact, Settings, Reminder, TestReminderInfo } from "./db-types";
 
-// ── Pick implementation at module load ──────────────────────────────
-// We use require() so webpack can tree-shake the unused backend
-// when serverExternalPackages excludes better-sqlite3 on Vercel.
+// Postgres is imported statically (always available on Vercel).
+// SQLite is imported via require() so it only loads locally where
+// better-sqlite3 is installed — on Vercel it's never reached.
+import * as postgres from "./db-postgres";
 
 interface DbBackend {
   getContacts(userId: string): Contact[] | Promise<Contact[]>;
@@ -28,12 +29,9 @@ interface DbBackend {
 const isPostgres = !!process.env.DATABASE_URL;
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const backend: DbBackend = isPostgres
-  ? require("./db-postgres")
-  : require("./db-sqlite");
+const backend: DbBackend = isPostgres ? postgres : require("./db-sqlite");
 
 // ── Re-export functions ─────────────────────────────────────────────
-// All return Promise to keep a uniform async interface for consumers.
 
 export function getContacts(userId: string) {
   return backend.getContacts(userId) as Promise<Contact[]>;

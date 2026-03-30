@@ -1,13 +1,21 @@
 import { Pool } from "pg";
 import type { Contact, Settings, Reminder, TestReminderInfo } from "./db-types";
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.DATABASE_URL?.includes("localhost") ? false : { rejectUnauthorized: false },
-});
+// Lazy-init: pool is only created when a query is actually run.
+// This prevents errors when db-postgres is imported but DATABASE_URL is not set (local dev).
+let _pool: Pool | null = null;
+function getPool(): Pool {
+  if (!_pool) {
+    _pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: process.env.DATABASE_URL?.includes("localhost") ? false : { rejectUnauthorized: false },
+    });
+  }
+  return _pool;
+}
 
 async function query<T = Record<string, unknown>>(text: string, params: unknown[] = []): Promise<T[]> {
-  const { rows } = await pool.query(text, params);
+  const { rows } = await getPool().query(text, params);
   return rows as T[];
 }
 
@@ -17,7 +25,7 @@ async function queryOne<T = Record<string, unknown>>(text: string, params: unkno
 }
 
 async function execute(text: string, params: unknown[] = []): Promise<number> {
-  const { rowCount } = await pool.query(text, params);
+  const { rowCount } = await getPool().query(text, params);
   return rowCount ?? 0;
 }
 
@@ -238,7 +246,7 @@ export const PgAuthAdapter = {
         ? session.expires.toISOString()
         : String(session.expires);
       console.log("[PgAuthAdapter.createSession] input:", { sessionToken: session.sessionToken, userId: session.userId, expires: expiresStr });
-      const { rows } = await pool.query(
+      const { rows } = await getPool().query(
         "INSERT INTO sessions (id, session_token, user_id, expires) VALUES ($1, $2, $3, $4) RETURNING session_token, user_id, expires",
         [id, session.sessionToken, session.userId, expiresStr]
       );
