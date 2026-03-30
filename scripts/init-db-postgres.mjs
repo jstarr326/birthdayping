@@ -1,21 +1,24 @@
 /**
- * Initialize the Postgres database schema on Vercel/Neon.
+ * Initialize the Postgres database schema (Supabase, Neon, or any Postgres).
  * Run: DATABASE_URL=postgres://... node scripts/init-db-postgres.mjs
  */
 
-import { neon } from "@neondatabase/serverless";
+import pg from "pg";
 
 const DATABASE_URL = process.env.DATABASE_URL;
 if (!DATABASE_URL) {
-  console.error("Set DATABASE_URL to your Neon/Postgres connection string");
+  console.error("Set DATABASE_URL to your Postgres connection string");
   process.exit(1);
 }
 
-const sql = neon(DATABASE_URL);
+const pool = new pg.Pool({
+  connectionString: DATABASE_URL,
+  ssl: DATABASE_URL.includes("localhost") ? false : { rejectUnauthorized: false },
+});
 
 console.log("Initializing Postgres schema...");
 
-await sql`
+await pool.query(`
   CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
     name TEXT,
@@ -24,9 +27,9 @@ await sql`
     image TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW()
   )
-`;
+`);
 
-await sql`
+await pool.query(`
   CREATE TABLE IF NOT EXISTS accounts (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -42,27 +45,27 @@ await sql`
     session_state TEXT,
     UNIQUE(provider, provider_account_id)
   )
-`;
+`);
 
-await sql`
+await pool.query(`
   CREATE TABLE IF NOT EXISTS sessions (
     id TEXT PRIMARY KEY,
     session_token TEXT UNIQUE NOT NULL,
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     expires TIMESTAMPTZ NOT NULL
   )
-`;
+`);
 
-await sql`
+await pool.query(`
   CREATE TABLE IF NOT EXISTS verification_tokens (
     identifier TEXT NOT NULL,
     token TEXT NOT NULL,
     expires TIMESTAMPTZ NOT NULL,
     PRIMARY KEY (identifier, token)
   )
-`;
+`);
 
-await sql`
+await pool.query(`
   CREATE TABLE IF NOT EXISTS contacts (
     id SERIAL PRIMARY KEY,
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -80,9 +83,9 @@ await sql`
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE(user_id, identifier)
   )
-`;
+`);
 
-await sql`
+await pool.query(`
   CREATE TABLE IF NOT EXISTS settings (
     user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
     send_time TEXT DEFAULT '09:00',
@@ -91,6 +94,7 @@ await sql`
     phone_number TEXT,
     updated_at TIMESTAMPTZ DEFAULT NOW()
   )
-`;
+`);
 
+await pool.end();
 console.log("✓ Postgres schema ready");
