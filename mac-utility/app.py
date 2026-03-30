@@ -265,5 +265,55 @@ class BirthdayPingApp(rumps.App):
         rumps.quit_application()
 
 
+def show_welcome_dialog():
+    """Show a first-launch welcome dialog with permission setup instructions."""
+    flag = Path.home() / ".birthdayping" / "onboarded"
+    if flag.exists():
+        return
+
+    flag.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        from AppKit import (
+            NSAlert, NSApplication, NSAlertFirstButtonReturn,
+            NSInformationalAlertStyle, NSImage,
+        )
+        from Foundation import NSURL
+
+        app = NSApplication.sharedApplication()
+
+        alert = NSAlert.alloc().init()
+        alert.setMessageText_("Welcome to BirthdayPing 🎂")
+        alert.setInformativeText_(
+            "BirthdayPing needs two permissions to work:\n\n"
+            "1. Full Disk Access — to read your iMessage history "
+            "(we only look at who you text and how often, never what you say)\n\n"
+            "2. Contacts — to match names to phone numbers and find birthdays\n\n"
+            "Click \"Open System Settings\" to grant Full Disk Access now. "
+            "Contacts permission will be requested automatically."
+        )
+        alert.setAlertStyle_(NSInformationalAlertStyle)
+        alert.addButtonWithTitle_("Open System Settings")
+        alert.addButtonWithTitle_("Got it")
+
+        response = alert.runModal()
+
+        if response == NSAlertFirstButtonReturn:
+            # Deep-link to Full Disk Access in System Settings
+            url = NSURL.URLWithString_(
+                "x-apple.systempreferences:com.apple.preference.security"
+                "?Privacy_AllFiles"
+            )
+            from AppKit import NSWorkspace
+            NSWorkspace.sharedWorkspace().openURL_(url)
+
+    except Exception:
+        # Fallback: if AppKit isn't available, just skip
+        pass
+
+    flag.write_text("1")
+
+
 if __name__ == "__main__":
+    show_welcome_dialog()
     BirthdayPingApp().run()
