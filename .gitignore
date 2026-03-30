@@ -5,6 +5,7 @@ local.db
 local.db-wal
 local.db-shm
 facebook-birthdays.csv
+mac-utility/facebook-birthdays.csv
 contacts_ranked.json
 .vercel
 

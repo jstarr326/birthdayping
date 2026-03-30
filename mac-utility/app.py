@@ -38,6 +38,7 @@ else:
 CORE_ENGINE = BUNDLE_DIR / "core_engine.py"
 SYNC_SCRIPT = BUNDLE_DIR / "sync.py"
 REMINDER_SCRIPT = BUNDLE_DIR / "reminder_check.py"
+FB_SCRAPER = BUNDLE_DIR / "facebook_scraper.py"
 
 DASHBOARD_URL = "https://birthdayping.vercel.app/dashboard"
 PLIST_NAME = "com.birthdayping.app"
@@ -62,6 +63,7 @@ class BirthdayPingApp(rumps.App):
         self.menu = [
             rumps.MenuItem("Run Contact Scan", callback=self.run_scan),
             rumps.MenuItem("Check Reminders", callback=self.check_reminders),
+            rumps.MenuItem("Scrape Facebook Birthdays", callback=self.scrape_facebook),
             rumps.separator,
             rumps.MenuItem("Open Dashboard", callback=self.open_dashboard),
             rumps.separator,
@@ -206,6 +208,44 @@ class BirthdayPingApp(rumps.App):
             rumps.notification("BirthdayPing", "Error", str(e)[:200])
         finally:
             self.title = "🎂"
+
+    def scrape_facebook(self, _):
+        """Launch the Facebook birthday scraper in a background thread."""
+        self.title = "\U0001F382\u23F3"
+        threading.Thread(target=self._do_scrape_facebook, daemon=True).start()
+
+    def _do_scrape_facebook(self):
+        try:
+            rumps.notification(
+                "BirthdayPing",
+                "Facebook Scraper",
+                "Opening browser — log into Facebook when prompted.",
+            )
+            result = subprocess.run(
+                [sys.executable, str(FB_SCRAPER)] if getattr(sys, "frozen", False)
+                else ["/usr/bin/python3", str(FB_SCRAPER)],
+                capture_output=True,
+                text=True,
+                timeout=600,  # 10 min — user needs time to log in
+            )
+            if result.returncode != 0:
+                error_msg = result.stderr.strip().split("\n")[-1] if result.stderr else "Unknown error"
+                rumps.notification(
+                    "BirthdayPing", "Scrape failed", error_msg[:200]
+                )
+                return
+
+            # Pull summary from last line of stdout
+            output_lines = result.stdout.strip().split("\n")
+            summary = output_lines[-1] if output_lines else "Done"
+            rumps.notification("BirthdayPing", "Facebook Scraper", summary)
+
+        except subprocess.TimeoutExpired:
+            rumps.notification("BirthdayPing", "Scrape timed out", "Try again.")
+        except Exception as e:
+            rumps.notification("BirthdayPing", "Error", str(e)[:200])
+        finally:
+            self.title = "\U0001F382"
 
     def open_dashboard(self, _):
         webbrowser.open(DASHBOARD_URL)

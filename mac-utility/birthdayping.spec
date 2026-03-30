@@ -26,6 +26,7 @@ a = Analysis(
         (os.path.join(project_root, "core_engine.py"), "."),
         (os.path.join(spec_dir, "reminder_check.py"), "."),
         (os.path.join(project_root, "scripts", "sync.py"), "."),
+        (os.path.join(spec_dir, "facebook_scraper.py"), "."),
     ],
     hiddenimports=[
         "rumps",
