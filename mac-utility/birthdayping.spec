@@ -40,8 +40,6 @@ a = Analysis(
         # Trim unnecessary weight
         "tkinter",
         "unittest",
-        "email",
-        "xml",
         "pydoc",
     ],
     noarchive=False,
