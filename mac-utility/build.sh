@@ -57,12 +57,20 @@ if $SIGN; then
     : "${TEAM_ID:?Set TEAM_ID env var}"
     : "${APP_PASSWORD:?Set APP_PASSWORD env var}"
 
+    ENTITLEMENTS="$SCRIPT_DIR/entitlements.plist"
+    if [[ ! -f "$ENTITLEMENTS" ]]; then
+        echo "ERROR: entitlements.plist not found at $ENTITLEMENTS"
+        exit 1
+    fi
+
     # Sign all nested binaries first, then the .app itself
     find "$APP_PATH" -type f \( -name "*.dylib" -o -name "*.so" -o -perm +111 \) \
-        -exec codesign --force --options runtime --sign "$DEVELOPER_ID" --timestamp {} \;
+        -exec codesign --force --options runtime --sign "$DEVELOPER_ID" \
+        --entitlements "$ENTITLEMENTS" --timestamp {} \;
 
     codesign --force --deep --options runtime \
         --sign "$DEVELOPER_ID" \
+        --entitlements "$ENTITLEMENTS" \
         --timestamp \
         "$APP_PATH"
 

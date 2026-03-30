@@ -22,6 +22,7 @@ import argparse
 import csv
 import json
 import re
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -37,6 +38,22 @@ except ImportError:
         file=sys.stderr,
     )
     sys.exit(1)
+
+
+def ensure_playwright_browser():
+    """Install Playwright's Chromium browser if not already present."""
+    try:
+        from playwright._impl._driver import compute_driver_executable
+        driver = compute_driver_executable()
+        result = subprocess.run(
+            [str(driver), "install", "chromium"],
+            capture_output=True, text=True, timeout=120,
+        )
+        if result.returncode != 0:
+            print(f"Warning: Playwright browser install returned: {result.stderr.strip()}")
+    except Exception as e:
+        print(f"Warning: Could not verify Playwright browser: {e}")
+        print("If the scraper fails, run: python3 -m playwright install chromium")
 
 BIRTHDAYS_URL = "https://www.facebook.com/birthdays"
 GRAPHQL_URL = "https://www.facebook.com/api/graphql/"
@@ -348,6 +365,9 @@ def main():
     print()
     print(f"Using profile: {user_data_dir}")
     print()
+
+    # Ensure Playwright's Chromium is installed (downloads on first run)
+    ensure_playwright_browser()
 
     with sync_playwright() as pw:
         print("Launching browser...")
