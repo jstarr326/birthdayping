@@ -3,11 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+type ReminderMethod = "sms" | "imessage";
+
 type Settings = {
   send_time: string;
   threshold: number;
   default_message: string;
   phone_number: string;
+  reminder_method: ReminderMethod;
 };
 
 export default function SettingsPage() {
@@ -16,6 +19,7 @@ export default function SettingsPage() {
     threshold: 0.3,
     default_message: "Happy birthday!",
     phone_number: "",
+    reminder_method: "sms",
   });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -26,7 +30,13 @@ export default function SettingsPage() {
     fetch("/api/settings")
       .then((r) => r.json())
       .then((data) => {
-        if (!data.error) setSettings(data);
+        if (!data.error) setSettings({
+          send_time: data.send_time ?? "09:00",
+          threshold: data.threshold ?? 0.3,
+          default_message: data.default_message ?? "Happy birthday!",
+          phone_number: data.phone_number ?? "",
+          reminder_method: data.reminder_method ?? "sms",
+        });
       });
   }, []);
 
@@ -56,12 +66,63 @@ export default function SettingsPage() {
       <main className="max-w-3xl mx-auto px-4 py-8">
         <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100">
 
+          {/* Reminder method */}
+          <div className="p-5">
+            <p className="font-medium text-gray-900 text-sm mb-1">How do you want reminders?</p>
+            <p className="text-xs text-gray-400 mb-3">
+              SMS works everywhere. iMessage requires the Mac utility running locally.
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setSettings({ ...settings, reminder_method: "sms" })}
+                className={`flex-1 text-sm font-medium py-2.5 rounded-lg border transition-colors ${
+                  settings.reminder_method === "sms"
+                    ? "border-blue-500 bg-blue-50 text-blue-700"
+                    : "border-gray-200 text-gray-500 hover:border-gray-300"
+                }`}
+              >
+                SMS (Twilio)
+              </button>
+              <button
+                onClick={() => setSettings({ ...settings, reminder_method: "imessage" })}
+                className={`flex-1 text-sm font-medium py-2.5 rounded-lg border transition-colors ${
+                  settings.reminder_method === "imessage"
+                    ? "border-blue-500 bg-blue-50 text-blue-700"
+                    : "border-gray-200 text-gray-500 hover:border-gray-300"
+                }`}
+              >
+                iMessage (Mac only)
+              </button>
+            </div>
+          </div>
+
+          {/* Phone number */}
+          <div className="p-5 flex items-center justify-between gap-4">
+            <div>
+              <p className="font-medium text-gray-900 text-sm">Your phone number</p>
+              <p className="text-xs text-gray-400 mt-0.5">
+                {settings.reminder_method === "sms"
+                  ? "Birthday reminders are sent here via SMS"
+                  : "Reminders are sent here via iMessage"}
+              </p>
+            </div>
+            <input
+              type="tel"
+              value={settings.phone_number}
+              onChange={(e) => setSettings({ ...settings, phone_number: e.target.value })}
+              placeholder="+15551234567"
+              className="border border-gray-300 rounded px-3 py-1.5 text-sm w-44 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
           {/* Reminder time */}
           <div className="p-5 flex items-center justify-between gap-4">
             <div>
               <p className="font-medium text-gray-900 text-sm">Reminder send time</p>
               <p className="text-xs text-gray-400 mt-0.5">
-                When the Mac utility texts you on birthdays
+                {settings.reminder_method === "sms"
+                  ? "When the server sends your daily birthday check (UTC)"
+                  : "When the Mac utility texts you on birthdays"}
               </p>
             </div>
             <input
@@ -108,7 +169,7 @@ export default function SettingsPage() {
               Default reminder message
             </p>
             <p className="text-xs text-gray-400 mb-3">
-              The reminder the Mac utility texts YOU on someone&apos;s birthday. Not sent to the contact.
+              The reminder sent to YOU on someone&apos;s birthday. Not sent to the contact.
             </p>
             <textarea
               value={settings.default_message}
@@ -124,30 +185,13 @@ export default function SettingsPage() {
             </p>
           </div>
 
-          {/* Phone number */}
-          <div className="p-5 flex items-center justify-between gap-4">
-            <div>
-              <p className="font-medium text-gray-900 text-sm">Your phone number</p>
-              <p className="text-xs text-gray-400 mt-0.5">
-                Reminders are sent here via iMessage
-              </p>
-            </div>
-            <input
-              type="tel"
-              value={settings.phone_number}
-              onChange={(e) => setSettings({ ...settings, phone_number: e.target.value })}
-              placeholder="+15551234567"
-              className="border border-gray-300 rounded px-3 py-1.5 text-sm w-44 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            />
-          </div>
-
           {/* Test reminder */}
           <div className="p-5">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-gray-900 text-sm">Send test reminder now</p>
+                <p className="font-medium text-gray-900 text-sm">Send test reminder</p>
                 <p className="text-xs text-gray-400 mt-0.5">
-                  Sends a real iMessage to your phone number above
+                  Sends a real {settings.reminder_method === "sms" ? "SMS" : "iMessage"} to your phone number
                 </p>
               </div>
               <button
@@ -160,7 +204,7 @@ export default function SettingsPage() {
                     if (data.error) {
                       setTestResult(`Error: ${data.error}`);
                     } else {
-                      setTestResult(`Sent to ${data.phone}: "${data.message}"`);
+                      setTestResult(`Sent via ${data.method} to ${data.phone}: "${data.message}"`);
                     }
                   } catch {
                     setTestResult("Error: could not reach server");

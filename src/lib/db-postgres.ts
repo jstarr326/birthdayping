@@ -109,13 +109,14 @@ export async function getSettings(userId: string): Promise<Settings | null> {
 
 export async function upsertSettings(userId: string, settings: Partial<Omit<Settings, "user_id">>) {
   await execute(
-    `INSERT INTO settings (user_id, send_time, threshold, default_message, phone_number)
-     VALUES ($1, $2, $3, $4, $5)
+    `INSERT INTO settings (user_id, send_time, threshold, default_message, phone_number, reminder_method)
+     VALUES ($1, $2, $3, $4, $5, $6)
      ON CONFLICT (user_id) DO UPDATE SET
-       send_time = COALESCE($6, settings.send_time),
-       threshold = COALESCE($7, settings.threshold),
-       default_message = COALESCE($8, settings.default_message),
-       phone_number = COALESCE($9, settings.phone_number),
+       send_time = COALESCE($7, settings.send_time),
+       threshold = COALESCE($8, settings.threshold),
+       default_message = COALESCE($9, settings.default_message),
+       phone_number = COALESCE($10, settings.phone_number),
+       reminder_method = COALESCE($11, settings.reminder_method),
        updated_at = NOW()`,
     [
       userId,
@@ -123,10 +124,12 @@ export async function upsertSettings(userId: string, settings: Partial<Omit<Sett
       settings.threshold ?? 0.3,
       settings.default_message ?? "Happy birthday!",
       settings.phone_number ?? null,
+      settings.reminder_method ?? "sms",
       settings.send_time ?? null,
       settings.threshold ?? null,
       settings.default_message ?? null,
       settings.phone_number ?? null,
+      settings.reminder_method ?? null,
     ]
   );
 }

@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { getTestReminderInfo } from "@/lib/db";
-import { execSync } from "child_process";
+import { getTestReminderInfo, getSettings } from "@/lib/db";
+import { sendSms } from "@/lib/twilio";
 
 // POST /api/reminders/test
-// Sends a real test iMessage to the user's phone number via osascript.
-// Only works when the Next.js server is running locally on a Mac.
+// Sends a test reminder via the user's chosen method (SMS or iMessage).
 
 export async function POST() {
   const session = await getServerSession(authOptions);
@@ -22,17 +21,28 @@ export async function POST() {
     );
   }
 
+  const settings = await getSettings(session.user.id);
+  const method = settings?.reminder_method ?? "sms";
   const { phone, message } = info;
 
-  // Send via osascript (local Mac only)
-  const escaped = message.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-  const script = `tell application "Messages" to send "${escaped}" to buddy "${phone}"`;
+  if (method === "sms") {
+    const result = await sendSms(phone, message);
+    if (result.success) {
+      return NextResponse.json({ sent: true, method: "sms", message, phone });
+    }
+    return NextResponse.json(
+      { error: `Twilio: ${result.error}` },
+      { status: 500 }
+    );
+  }
 
+  // iMessage via osascript (local Mac only)
   try {
-    execSync(`osascript -e '${script.replace(/'/g, "'\\''")}'`, {
-      timeout: 15000,
-    });
-    return NextResponse.json({ sent: true, message, phone });
+    const { execSync } = await import("child_process");
+    const escaped = message.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    const script = `tell application "Messages" to send "${escaped}" to buddy "${phone}"`;
+    execSync(`osascript -e '${script.replace(/'/g, "'\\''")}'`, { timeout: 15000 });
+    return NextResponse.json({ sent: true, method: "imessage", message, phone });
   } catch (e) {
     const err = e as { stderr?: Buffer };
     const stderr = err.stderr?.toString().trim() ?? "Unknown error";

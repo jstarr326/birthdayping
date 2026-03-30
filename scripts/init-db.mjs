@@ -90,6 +90,7 @@ db.exec(`
     threshold REAL DEFAULT 0.3,
     default_message TEXT DEFAULT 'Happy birthday!',
     phone_number TEXT,
+    reminder_method TEXT DEFAULT 'sms',
     onboarding_complete INTEGER DEFAULT 0,
     updated_at TEXT DEFAULT (datetime('now'))
   )

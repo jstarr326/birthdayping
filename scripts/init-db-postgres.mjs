@@ -92,6 +92,7 @@ await pool.query(`
     threshold FLOAT DEFAULT 0.3,
     default_message TEXT DEFAULT 'Happy birthday!',
     phone_number TEXT,
+    reminder_method TEXT DEFAULT 'sms',
     onboarding_complete BOOLEAN DEFAULT false,
     updated_at TIMESTAMPTZ DEFAULT NOW()
   )

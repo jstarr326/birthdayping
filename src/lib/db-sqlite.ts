@@ -76,13 +76,14 @@ export function getSettings(userId: string): Settings | null {
 
 export function upsertSettings(userId: string, settings: Partial<Omit<Settings, "user_id">>) {
   sqliteDb.prepare(`
-    INSERT INTO settings (user_id, send_time, threshold, default_message, phone_number)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO settings (user_id, send_time, threshold, default_message, phone_number, reminder_method)
+    VALUES (?, ?, ?, ?, ?, ?)
     ON CONFLICT (user_id) DO UPDATE SET
       send_time = COALESCE(?, settings.send_time),
       threshold = COALESCE(?, settings.threshold),
       default_message = COALESCE(?, settings.default_message),
       phone_number = COALESCE(?, settings.phone_number),
+      reminder_method = COALESCE(?, settings.reminder_method),
       updated_at = datetime('now')
   `).run(
     userId,
@@ -90,10 +91,12 @@ export function upsertSettings(userId: string, settings: Partial<Omit<Settings, 
     settings.threshold ?? 0.3,
     settings.default_message ?? "Happy birthday!",
     settings.phone_number ?? null,
+    settings.reminder_method ?? "sms",
     settings.send_time ?? null,
     settings.threshold ?? null,
     settings.default_message ?? null,
-    settings.phone_number ?? null
+    settings.phone_number ?? null,
+    settings.reminder_method ?? null
   );
 }
 

@@ -15,12 +15,15 @@ export type Contact = {
   updated_at: string;
 };
 
+export type ReminderMethod = "sms" | "imessage";
+
 export type Settings = {
   user_id: string;
   send_time: string;
   threshold: number;
   default_message: string;
   phone_number: string | null;
+  reminder_method: ReminderMethod;
   onboarding_complete: boolean;
 };
 

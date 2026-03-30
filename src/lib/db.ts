@@ -5,7 +5,7 @@
  * at startup based on the DATABASE_URL environment variable.
  */
 
-export type { Contact, Settings, Reminder, TestReminderInfo } from "./db-types";
+export type { Contact, Settings, Reminder, TestReminderInfo, ReminderMethod } from "./db-types";
 
 import type { Contact, Settings, Reminder, TestReminderInfo } from "./db-types";
 

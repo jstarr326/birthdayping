@@ -27,6 +27,7 @@ export async function PUT(req: NextRequest) {
     threshold: body.threshold,
     default_message: body.default_message,
     phone_number: body.phone_number,
+    reminder_method: body.reminder_method,
   });
 
   return NextResponse.json({ ok: true });
