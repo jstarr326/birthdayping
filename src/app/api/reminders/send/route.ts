@@ -7,13 +7,14 @@ import { sendSms } from "@/lib/twilio";
 // Called by Vercel Cron or manually. Protected by SYNC_API_KEY or CRON_SECRET.
 
 export async function POST(req: NextRequest) {
-  // Auth: accept either SYNC_API_KEY bearer token or Vercel's CRON_SECRET header
+  // Auth: accept SYNC_API_KEY or CRON_SECRET as Bearer token
+  // Vercel cron sends: Authorization: Bearer <CRON_SECRET>
   const auth = req.headers.get("authorization");
-  const cronSecret = req.headers.get("x-vercel-cron-secret");
-  const validBearer = auth === `Bearer ${process.env.SYNC_API_KEY}`;
-  const validCron = cronSecret && cronSecret === process.env.CRON_SECRET;
+  const token = auth?.replace("Bearer ", "");
+  const validSyncKey = token && token === process.env.SYNC_API_KEY;
+  const validCron = token && token === process.env.CRON_SECRET;
 
-  if (!validBearer && !validCron) {
+  if (!validSyncKey && !validCron) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
