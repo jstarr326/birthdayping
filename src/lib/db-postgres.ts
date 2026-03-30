@@ -228,11 +228,18 @@ export const PgAuthAdapter = {
   },
   async createSession(session: { sessionToken: string; userId: string; expires: Date }) {
     const id = crypto.randomUUID();
-    await execute(
-      "INSERT INTO sessions (id, session_token, user_id, expires) VALUES ($1, $2, $3, $4)",
-      [id, session.sessionToken, session.userId, session.expires.toISOString()]
+    const expiresStr = session.expires instanceof Date
+      ? session.expires.toISOString()
+      : String(session.expires);
+    const row = await queryOne<{ session_token: string; user_id: string; expires: string }>(
+      "INSERT INTO sessions (id, session_token, user_id, expires) VALUES ($1, $2, $3, $4) RETURNING session_token, user_id, expires",
+      [id, session.sessionToken, session.userId, expiresStr]
     );
-    return session;
+    return {
+      sessionToken: row!.session_token,
+      userId: row!.user_id,
+      expires: new Date(row!.expires),
+    };
   },
   async getSessionAndUser(sessionToken: string) {
     const row = await queryOne<Record<string, unknown>>(
