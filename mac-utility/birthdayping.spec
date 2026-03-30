@@ -32,6 +32,8 @@ a = Analysis(
         "Contacts",
         "objc",
         "Foundation",
+        "AppKit",
+        "CoreFoundation",
     ],
     hookspath=[],
     hooksconfig={},

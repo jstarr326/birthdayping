@@ -18,6 +18,16 @@ from pathlib import Path
 
 import rumps
 
+# Ensure the app is recognized as a foreground GUI app by macOS.
+# PyInstaller + LSUIElement apps sometimes need an explicit NSApplication push.
+try:
+    from AppKit import NSApplication, NSApplicationActivationPolicyAccessory
+    NSApplication.sharedApplication().setActivationPolicy_(
+        NSApplicationActivationPolicyAccessory
+    )
+except Exception:
+    pass
+
 # When bundled by PyInstaller, resources live next to the executable inside the .app.
 # sys._MEIPASS is set by PyInstaller at runtime.
 if getattr(sys, "frozen", False):
@@ -46,7 +56,7 @@ class BirthdayPingApp(rumps.App):
     def __init__(self):
         super().__init__(
             name="BirthdayPing",
-            title="🎂",
+            title="\U0001F382",  # 🎂
             quit_button=None,  # we add our own
         )
         self.menu = [
