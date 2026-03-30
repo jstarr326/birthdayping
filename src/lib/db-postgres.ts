@@ -170,9 +170,13 @@ export async function getTestReminderInfo(userId: string): Promise<TestReminderI
 
 function toUser(row: Record<string, unknown> | undefined | null) {
   if (!row) return null;
+  // NextAuth expects { id, name, email, emailVerified, image } — map from Postgres columns
   return {
-    ...row,
+    id: row.id as string,
+    name: (row.name as string) ?? null,
+    email: row.email as string,
     emailVerified: row.email_verified ? new Date(row.email_verified as string) : null,
+    image: (row.image as string) ?? null,
   };
 }
 

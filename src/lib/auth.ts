@@ -135,6 +135,7 @@ export const authOptions: NextAuthOptions = {
     ...devProviders,
   ],
   session: { strategy: "database" },
+  debug: process.env.NODE_ENV === "development" || !!process.env.NEXTAUTH_DEBUG,
   callbacks: {
     session({ session, user }) {
       if (session.user) session.user.id = user.id;
