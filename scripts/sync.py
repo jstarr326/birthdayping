@@ -14,7 +14,7 @@ except ImportError:
     SSL_CTX.check_hostname = False
     SSL_CTX.verify_mode = ssl.CERT_NONE
 
-API_URL = "https://birthdayping.vercel.app/api/sync"
+API_URL = "https://bdayalert.app/api/sync"
 API_KEY = "snickers7"
 USER_EMAIL = "jstarrtaylor@gmail.com"
 
