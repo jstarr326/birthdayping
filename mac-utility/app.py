@@ -315,5 +315,12 @@ def show_welcome_dialog():
 
 
 if __name__ == "__main__":
-    show_welcome_dialog()
-    BirthdayPingApp().run()
+    import traceback
+    log_path = Path.home() / ".birthdayping" / "app.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        show_welcome_dialog()
+        BirthdayPingApp().run()
+    except Exception:
+        log_path.write_text(traceback.format_exc())
+        raise

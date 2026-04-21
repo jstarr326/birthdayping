@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27T14:21:02.354657",
+  "generated_at": "2026-03-30T11:06:14.713326",
   "threshold": 0.3,
   "has_birthday": [
     {
@@ -16,35 +16,35 @@
     {
       "name": "Mom",
       "identifier": "+14062405992",
-      "score": 0.9004,
-      "total_messages": 6222,
-      "sent_count": 2164,
-      "received_count": 4058,
-      "last_texted": "2026-03-26",
+      "score": 0.9005,
+      "total_messages": 6229,
+      "sent_count": 2167,
+      "received_count": 4062,
+      "last_texted": "2026-03-30",
       "has_birthday": true,
       "birthday_date": "????-10-02"
+    },
+    {
+      "name": "Mchale Anderson",
+      "identifier": "+14065460874",
+      "score": 0.8773,
+      "total_messages": 3624,
+      "sent_count": 1235,
+      "received_count": 2389,
+      "last_texted": "2026-03-29",
+      "has_birthday": true,
+      "birthday_date": "????-03-19"
     },
     {
       "name": "Michael Anderson",
       "identifier": "+16509065368",
       "score": 0.877,
-      "total_messages": 4692,
+      "total_messages": 4697,
       "sent_count": 1367,
-      "received_count": 3325,
-      "last_texted": "2026-03-26",
+      "received_count": 3330,
+      "last_texted": "2026-03-30",
       "has_birthday": true,
       "birthday_date": "????-08-12"
-    },
-    {
-      "name": "Mchale Anderson",
-      "identifier": "+14065460874",
-      "score": 0.877,
-      "total_messages": 3618,
-      "sent_count": 1229,
-      "received_count": 2389,
-      "last_texted": "2026-03-26",
-      "has_birthday": true,
-      "birthday_date": "????-03-19"
     },
     {
       "name": "Mike Petegotsky",
@@ -60,11 +60,11 @@
     {
       "name": "Tyler Kamura",
       "identifier": "+14063705097",
-      "score": 0.8053,
-      "total_messages": 471,
-      "sent_count": 178,
-      "received_count": 293,
-      "last_texted": "2026-03-26",
+      "score": 0.8085,
+      "total_messages": 489,
+      "sent_count": 188,
+      "received_count": 301,
+      "last_texted": "2026-03-30",
       "has_birthday": true,
       "birthday_date": "????-07-08"
     }
@@ -73,11 +73,11 @@
     {
       "name": "Megan Valentine",
       "identifier": "+17205877202",
-      "score": 0.9596,
-      "total_messages": 10598,
-      "sent_count": 5060,
-      "received_count": 5538,
-      "last_texted": "2026-03-27",
+      "score": 0.9598,
+      "total_messages": 10638,
+      "sent_count": 5080,
+      "received_count": 5558,
+      "last_texted": "2026-03-30",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -85,10 +85,10 @@
       "name": "Jamie McCroskery",
       "identifier": "+18186610896",
       "score": 0.9344,
-      "total_messages": 11233,
+      "total_messages": 11237,
       "sent_count": 4379,
-      "received_count": 6854,
-      "last_texted": "2026-03-26",
+      "received_count": 6858,
+      "last_texted": "2026-03-29",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -96,32 +96,32 @@
       "name": "Dad",
       "identifier": "+14065319494",
       "score": 0.9192,
-      "total_messages": 6740,
-      "sent_count": 2750,
-      "received_count": 3990,
-      "last_texted": "2026-03-26",
+      "total_messages": 6746,
+      "sent_count": 2753,
+      "received_count": 3993,
+      "last_texted": "2026-03-30",
       "has_birthday": false,
       "birthday_date": null
     },
     {
       "name": "Sam Levine",
       "identifier": "+16466475103",
-      "score": 0.9014,
-      "total_messages": 7794,
-      "sent_count": 2431,
-      "received_count": 5363,
-      "last_texted": "2026-03-25",
+      "score": 0.9016,
+      "total_messages": 7821,
+      "sent_count": 2442,
+      "received_count": 5379,
+      "last_texted": "2026-03-30",
       "has_birthday": false,
       "birthday_date": null
     },
     {
       "name": "Nadia",
       "identifier": "+13057761930",
-      "score": 0.8939,
-      "total_messages": 10807,
-      "sent_count": 2152,
-      "received_count": 8655,
-      "last_texted": "2026-03-27",
+      "score": 0.8941,
+      "total_messages": 10844,
+      "sent_count": 2162,
+      "received_count": 8682,
+      "last_texted": "2026-03-30",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -129,32 +129,32 @@
       "name": "Phil Boyer",
       "identifier": "+19255183315",
       "score": 0.8888,
-      "total_messages": 10457,
+      "total_messages": 10466,
       "sent_count": 1822,
-      "received_count": 8635,
-      "last_texted": "2026-03-26",
+      "received_count": 8644,
+      "last_texted": "2026-03-30",
       "has_birthday": false,
       "birthday_date": null
     },
     {
       "name": "Nate Taylor",
       "identifier": "+13032486455",
-      "score": 0.8884,
-      "total_messages": 5837,
-      "sent_count": 1779,
-      "received_count": 4058,
-      "last_texted": "2026-03-27",
+      "score": 0.8886,
+      "total_messages": 5856,
+      "sent_count": 1786,
+      "received_count": 4070,
+      "last_texted": "2026-03-29",
       "has_birthday": false,
       "birthday_date": null
     },
     {
       "name": "Andrew Dudum",
       "identifier": "+14152354170",
-      "score": 0.8789,
-      "total_messages": 7681,
-      "sent_count": 1461,
-      "received_count": 6220,
-      "last_texted": "2026-03-27",
+      "score": 0.8791,
+      "total_messages": 7697,
+      "sent_count": 1469,
+      "received_count": 6228,
+      "last_texted": "2026-03-28",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -214,24 +214,13 @@
       "birthday_date": null
     },
     {
-      "name": "Matt Judson",
-      "identifier": "+13392250988",
-      "score": 0.8457,
-      "total_messages": 1329,
-      "sent_count": 498,
-      "received_count": 831,
-      "last_texted": "2026-02-26",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Eric Friedman",
       "identifier": "+16102091096",
-      "score": 0.8375,
-      "total_messages": 1417,
+      "score": 0.8374,
+      "total_messages": 1420,
       "sent_count": 467,
-      "received_count": 950,
-      "last_texted": "2026-03-11",
+      "received_count": 953,
+      "last_texted": "2026-03-30",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -250,10 +239,10 @@
       "name": "Scott Lexton",
       "identifier": "+16462065937",
       "score": 0.8324,
-      "total_messages": 2285,
+      "total_messages": 2288,
       "sent_count": 458,
-      "received_count": 1827,
-      "last_texted": "2026-03-26",
+      "received_count": 1830,
+      "last_texted": "2026-03-28",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -326,11 +315,11 @@
     {
       "name": "Andrew Firk",
       "identifier": "+12173903929",
-      "score": 0.8059,
-      "total_messages": 1334,
+      "score": 0.806,
+      "total_messages": 1341,
       "sent_count": 222,
-      "received_count": 1112,
-      "last_texted": "2026-03-27",
+      "received_count": 1119,
+      "last_texted": "2026-03-29",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -348,11 +337,11 @@
     {
       "name": "Brian Powers",
       "identifier": "+13014520342",
-      "score": 0.8036,
-      "total_messages": 491,
-      "sent_count": 179,
-      "received_count": 312,
-      "last_texted": "2026-03-26",
+      "score": 0.8051,
+      "total_messages": 500,
+      "sent_count": 184,
+      "received_count": 316,
+      "last_texted": "2026-03-29",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -392,11 +381,11 @@
     {
       "name": "Jordan Taylor",
       "identifier": "+14062404844",
-      "score": 0.7924,
-      "total_messages": 401,
-      "sent_count": 141,
-      "received_count": 260,
-      "last_texted": "2026-03-19",
+      "score": 0.7929,
+      "total_messages": 407,
+      "sent_count": 143,
+      "received_count": 264,
+      "last_texted": "2026-03-27",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -445,24 +434,13 @@
       "birthday_date": null
     },
     {
-      "name": "Daniel Ross",
-      "identifier": "+19365850411",
-      "score": 0.7799,
-      "total_messages": 118,
-      "sent_count": 62,
-      "received_count": 56,
-      "last_texted": "2026-02-26",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
-      "name": "Cyrus Akrami",
-      "identifier": "+14155005862",
-      "score": 0.7766,
-      "total_messages": 139,
-      "sent_count": 62,
-      "received_count": 77,
-      "last_texted": "2026-02-25",
+      "name": "Kasey Kennedy",
+      "identifier": "+17192508047",
+      "score": 0.7772,
+      "total_messages": 382,
+      "sent_count": 111,
+      "received_count": 271,
+      "last_texted": "2026-03-30",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -478,24 +456,13 @@
       "birthday_date": null
     },
     {
-      "name": "Kasey Kennedy",
-      "identifier": "+17192508047",
-      "score": 0.7755,
-      "total_messages": 372,
-      "sent_count": 107,
-      "received_count": 265,
-      "last_texted": "2026-03-26",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Lucy Chen",
       "identifier": "+16505755967",
       "score": 0.7746,
-      "total_messages": 563,
+      "total_messages": 567,
       "sent_count": 105,
-      "received_count": 458,
-      "last_texted": "2026-03-22",
+      "received_count": 462,
+      "last_texted": "2026-03-29",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -562,6 +529,17 @@
       "sent_count": 34,
       "received_count": 39,
       "last_texted": "2026-03-05",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
+      "name": "Jenna Vivaldi",
+      "identifier": "+19168567372",
+      "score": 0.7558,
+      "total_messages": 183,
+      "sent_count": 60,
+      "received_count": 123,
+      "last_texted": "2026-03-28",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -654,17 +632,6 @@
       "birthday_date": null
     },
     {
-      "name": "Pranav",
-      "identifier": "+14086578211",
-      "score": 0.7368,
-      "total_messages": 177,
-      "sent_count": 42,
-      "received_count": 135,
-      "last_texted": "2026-02-25",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Mike Saqui",
       "identifier": "+15592851735",
       "score": 0.7346,
@@ -676,17 +643,6 @@
       "birthday_date": null
     },
     {
-      "name": "Tommy Fink",
-      "identifier": "+13054396003",
-      "score": 0.7326,
-      "total_messages": 188,
-      "sent_count": 37,
-      "received_count": 151,
-      "last_texted": "2026-02-25",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Dan Shikavnov",
       "identifier": "+16503466564",
       "score": 0.7291,
@@ -694,17 +650,6 @@
       "sent_count": 4,
       "received_count": 305,
       "last_texted": "2026-03-26",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
-      "name": "Aves Hoffman",
-      "identifier": "+18087536498",
-      "score": 0.7226,
-      "total_messages": 30,
-      "sent_count": 16,
-      "received_count": 14,
-      "last_texted": "2026-02-27",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -731,13 +676,24 @@
       "birthday_date": null
     },
     {
+      "name": "Bob Foothill",
+      "identifier": "+18315946087",
+      "score": 0.7207,
+      "total_messages": 51,
+      "sent_count": 20,
+      "received_count": 31,
+      "last_texted": "2026-03-28",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
       "name": "Katherine Hunt",
       "identifier": "+17146790285",
-      "score": 0.7116,
-      "total_messages": 62,
+      "score": 0.7107,
+      "total_messages": 64,
       "sent_count": 20,
-      "received_count": 42,
-      "last_texted": "2026-03-27",
+      "received_count": 44,
+      "last_texted": "2026-03-29",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -771,6 +727,17 @@
       "sent_count": 0,
       "received_count": 141,
       "last_texted": "2026-03-26",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
+      "name": "Matt Judson",
+      "identifier": "+13392250988",
+      "score": 0.6957,
+      "total_messages": 1329,
+      "sent_count": 498,
+      "received_count": 831,
+      "last_texted": "2026-02-26",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -951,17 +918,6 @@
       "birthday_date": null
     },
     {
-      "name": "Rush Moody",
-      "identifier": "+17137252732",
-      "score": 0.6604,
-      "total_messages": 14,
-      "sent_count": 5,
-      "received_count": 9,
-      "last_texted": "2026-02-26",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "dylan Bynun",
       "identifier": "+17142706469",
       "score": 0.6566,
@@ -986,11 +942,22 @@
     {
       "name": "Unknown \u2014 +18557301564",
       "identifier": "+18557301564",
-      "score": 0.6492,
-      "total_messages": 37,
+      "score": 0.6501,
+      "total_messages": 38,
       "sent_count": 2,
-      "received_count": 35,
-      "last_texted": "2026-03-18",
+      "received_count": 36,
+      "last_texted": "2026-03-27",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
+      "name": "Unknown \u2014 +14159156343",
+      "identifier": "+14159156343",
+      "score": 0.6445,
+      "total_messages": 38,
+      "sent_count": 0,
+      "received_count": 38,
+      "last_texted": "2026-03-28",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1017,13 +984,13 @@
       "birthday_date": null
     },
     {
-      "name": "Unknown \u2014 +14159156343",
-      "identifier": "+14159156343",
-      "score": 0.6424,
-      "total_messages": 36,
+      "name": "Unknown \u2014 75704",
+      "identifier": "75704",
+      "score": 0.6389,
+      "total_messages": 33,
       "sent_count": 0,
-      "received_count": 36,
-      "last_texted": "2026-03-26",
+      "received_count": 33,
+      "last_texted": "2026-03-29",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1035,17 +1002,6 @@
       "sent_count": 84,
       "received_count": 108,
       "last_texted": "2026-01-20",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
-      "name": "Unknown \u2014 75704",
-      "identifier": "75704",
-      "score": 0.6364,
-      "total_messages": 31,
-      "sent_count": 0,
-      "received_count": 31,
-      "last_texted": "2026-03-25",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1083,6 +1039,17 @@
       "birthday_date": null
     },
     {
+      "name": "Daniel Ross",
+      "identifier": "+19365850411",
+      "score": 0.6299,
+      "total_messages": 118,
+      "sent_count": 62,
+      "received_count": 56,
+      "last_texted": "2026-02-26",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
       "name": "Unknown \u2014 83992",
       "identifier": "83992",
       "score": 0.6291,
@@ -1090,6 +1057,17 @@
       "sent_count": 1,
       "received_count": 22,
       "last_texted": "2026-03-07",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
+      "name": "Cyrus Akrami",
+      "identifier": "+14155005862",
+      "score": 0.6266,
+      "total_messages": 139,
+      "sent_count": 62,
+      "received_count": 77,
+      "last_texted": "2026-02-25",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1160,17 +1138,6 @@
       "birthday_date": null
     },
     {
-      "name": "Connor Mckenna",
-      "identifier": "+17025214094",
-      "score": 0.6109,
-      "total_messages": 246,
-      "sent_count": 73,
-      "received_count": 173,
-      "last_texted": "2025-12-28",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Robert Bales",
       "identifier": "+16083359606",
       "score": 0.6088,
@@ -1204,17 +1171,6 @@
       "birthday_date": null
     },
     {
-      "name": "Unknown \u2014 +16503284411",
-      "identifier": "+16503284411",
-      "score": 0.6049,
-      "total_messages": 14,
-      "sent_count": 0,
-      "received_count": 14,
-      "last_texted": "2026-02-27",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Unknown \u2014 65161",
       "identifier": "65161",
       "score": 0.6049,
@@ -1226,17 +1182,6 @@
       "birthday_date": null
     },
     {
-      "name": "Jenna Vivaldi",
-      "identifier": "+19168567372",
-      "score": 0.604,
-      "total_messages": 179,
-      "sent_count": 58,
-      "received_count": 121,
-      "last_texted": "2026-01-05",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Bowlsby",
       "identifier": "+19522393735",
       "score": 0.6034,
@@ -1244,28 +1189,6 @@
       "sent_count": 59,
       "received_count": 299,
       "last_texted": "2026-02-01",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
-      "name": "Unknown \u2014 24255",
-      "identifier": "24255",
-      "score": 0.6019,
-      "total_messages": 13,
-      "sent_count": 0,
-      "received_count": 13,
-      "last_texted": "2026-02-26",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
-      "name": "Unknown \u2014 60890",
-      "identifier": "60890",
-      "score": 0.5987,
-      "total_messages": 12,
-      "sent_count": 0,
-      "received_count": 12,
-      "last_texted": "2026-02-25",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1292,17 +1215,6 @@
       "birthday_date": null
     },
     {
-      "name": "Unknown \u2014 69964",
-      "identifier": "69964",
-      "score": 0.5953,
-      "total_messages": 11,
-      "sent_count": 0,
-      "received_count": 11,
-      "last_texted": "2026-02-26",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Bryce Albin",
       "identifier": "+14045108680",
       "score": 0.5873,
@@ -1325,6 +1237,17 @@
       "birthday_date": null
     },
     {
+      "name": "Pranav",
+      "identifier": "+14086578211",
+      "score": 0.5868,
+      "total_messages": 177,
+      "sent_count": 42,
+      "received_count": 135,
+      "last_texted": "2026-02-25",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
       "name": "Unknown \u2014 +19497480210",
       "identifier": "+19497480210",
       "score": 0.5839,
@@ -1343,6 +1266,17 @@
       "sent_count": 26,
       "received_count": 21,
       "last_texted": "2026-01-14",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
+      "name": "Tommy Fink",
+      "identifier": "+13054396003",
+      "score": 0.5826,
+      "total_messages": 188,
+      "sent_count": 37,
+      "received_count": 151,
+      "last_texted": "2026-02-25",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1376,6 +1310,17 @@
       "sent_count": 33,
       "received_count": 133,
       "last_texted": "2026-02-12",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
+      "name": "Aves Hoffman",
+      "identifier": "+18087536498",
+      "score": 0.5726,
+      "total_messages": 30,
+      "sent_count": 16,
+      "received_count": 14,
+      "last_texted": "2026-02-27",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1523,6 +1468,17 @@
       "birthday_date": null
     },
     {
+      "name": "Rush Moody",
+      "identifier": "+17137252732",
+      "score": 0.5104,
+      "total_messages": 14,
+      "sent_count": 5,
+      "received_count": 9,
+      "last_texted": "2026-02-26",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
       "name": "Unknown \u2014 +14155398227",
       "identifier": "+14155398227",
       "score": 0.5104,
@@ -1655,6 +1611,17 @@
       "birthday_date": null
     },
     {
+      "name": "Connor Mckenna",
+      "identifier": "+17025214094",
+      "score": 0.4609,
+      "total_messages": 246,
+      "sent_count": 73,
+      "received_count": 173,
+      "last_texted": "2025-12-28",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
       "name": "Unknown \u2014 43789",
       "identifier": "43789",
       "score": 0.4576,
@@ -1677,6 +1644,17 @@
       "birthday_date": null
     },
     {
+      "name": "Unknown \u2014 +16503284411",
+      "identifier": "+16503284411",
+      "score": 0.4549,
+      "total_messages": 14,
+      "sent_count": 0,
+      "received_count": 14,
+      "last_texted": "2026-02-27",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
       "name": "Unknown \u2014 97624",
       "identifier": "97624",
       "score": 0.4549,
@@ -1684,6 +1662,17 @@
       "sent_count": 0,
       "received_count": 14,
       "last_texted": "2026-02-24",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
+      "name": "Unknown \u2014 24255",
+      "identifier": "24255",
+      "score": 0.4519,
+      "total_messages": 13,
+      "sent_count": 0,
+      "received_count": 13,
+      "last_texted": "2026-02-26",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1743,6 +1732,17 @@
       "birthday_date": null
     },
     {
+      "name": "Unknown \u2014 60890",
+      "identifier": "60890",
+      "score": 0.4487,
+      "total_messages": 12,
+      "sent_count": 0,
+      "received_count": 12,
+      "last_texted": "2026-02-25",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
       "name": "Unknown \u2014 +14063455397",
       "identifier": "+14063455397",
       "score": 0.4453,
@@ -1750,6 +1750,17 @@
       "sent_count": 0,
       "received_count": 11,
       "last_texted": "2026-01-16",
+      "has_birthday": false,
+      "birthday_date": null
+    },
+    {
+      "name": "Unknown \u2014 69964",
+      "identifier": "69964",
+      "score": 0.4453,
+      "total_messages": 11,
+      "sent_count": 0,
+      "received_count": 11,
+      "last_texted": "2026-02-26",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -1860,28 +1871,6 @@
       "sent_count": 17,
       "received_count": 204,
       "last_texted": "2025-11-14",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
-      "name": "Bob Foothill",
-      "identifier": "+18315946087",
-      "score": 0.4221,
-      "total_messages": 50,
-      "sent_count": 20,
-      "received_count": 30,
-      "last_texted": "2025-12-04",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
-      "name": "Unknown \u2014 +12342901337",
-      "identifier": "+12342901337",
-      "score": 0.4083,
-      "total_messages": 189,
-      "sent_count": 0,
-      "received_count": 189,
-      "last_texted": "2025-09-30",
       "has_birthday": false,
       "birthday_date": null
     },
@@ -2007,17 +1996,6 @@
       "birthday_date": null
     },
     {
-      "name": "Unknown \u2014 543339",
-      "identifier": "543339",
-      "score": 0.3364,
-      "total_messages": 31,
-      "sent_count": 0,
-      "received_count": 31,
-      "last_texted": "2025-10-01",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
       "name": "Unknown \u2014 +12014623963",
       "identifier": "+12014623963",
       "score": 0.3338,
@@ -2102,17 +2080,6 @@
       "sent_count": 84,
       "received_count": 270,
       "last_texted": "2025-05-15",
-      "has_birthday": false,
-      "birthday_date": null
-    },
-    {
-      "name": "Michael Scognamiglio",
-      "identifier": "+12012643806",
-      "score": 0.3102,
-      "total_messages": 16,
-      "sent_count": 0,
-      "received_count": 16,
-      "last_texted": "2025-09-30",
       "has_birthday": false,
       "birthday_date": null
     },

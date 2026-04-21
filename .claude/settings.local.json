@@ -24,7 +24,14 @@
       "Bash(chmod:*)",
       "Bash(git:*)",
       "Bash(vercel --version)",
-      "Bash(vercel env:*)"
+      "Bash(vercel env:*)",
+      "Bash(grep -E \"\\\\.\\(txt|toml|py|cfg|lock\\)$\")",
+      "Bash(find /Users/jordantaylor/Desktop/claude-projects/birthdayping/mac-utility/dist/BirthdayPing.app -name *.py)",
+      "Bash(plutil:*)",
+      "Bash(./build.sh 2>&1)",
+      "Bash(/Users/jordantaylor/Desktop/claude-projects/birthdayping/mac-utility/dist/BirthdayPing.app/Contents/MacOS/BirthdayPing 2>&1)",
+      "Bash(sqlite3 '~/Library/Messages/chat.db' ':*)",
+      "Bash(sqlite3:*)"
     ]
   }
 }
